@@ -378,6 +378,37 @@
   }
   .fade-in{animation:fin .3s steps(3) 1;}
   @keyframes fin{0%{opacity:0;}100%{opacity:1;}}
+
+  /* ============ 移动端 / 触屏适配补丁（v7.1 双版本共用） ============ */
+  html{-webkit-text-size-adjust:100%;}
+  body{touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
+  button,.btn,.opt,.multi-opt,.cell,.close-x,.series-tabs button{-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
+  /* 听诊/查体热点：视觉不变，点击区外扩 14px，手指好按 */
+  .hs::after{content:'';position:absolute;left:-14px;top:-14px;right:-14px;bottom:-14px;}
+  @media (max-width:768px){
+    /* 系列 tab：固定两列，文字完整不截断 */
+    .series-tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+    .series-tabs button{width:100%;box-sizing:border-box;text-align:center;padding:10px 4px;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .btn,.opt,.multi-opt{min-height:44px;}
+    .opt,.multi-opt{font-size:16px;line-height:1.45;}
+    .multi-opt{text-align:left;}
+    /* 弹层卡片：贴边更省空间，保留档案纸质感 */
+    .sheet{max-width:96vw !important;max-height:90vh;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:16px 14px !important;}
+    /* 案卷柜系列 tab：小屏保持两列但压缩内边距 */
+    .series-tabs{gap:6px;}
+    /* 报告卡四宫格在小屏退化为两列紧凑（已有 560px 规则，这里统一保证） */
+    #reports-grid{gap:10px;}
+    /* 结局/档案长文行距放宽，手机阅读友好 */
+    .d-item,.sc-advice,.verdict-line{line-height:1.65;}
+  }
+  @media (max-width:420px){
+    #reports-grid{grid-template-columns:1fr 1fr;gap:8px;}
+    .series-tabs button{font-size:11.5px;padding:10px 2px;}
+  }
+  /* 横屏 iPhone 安全区 */
+  @supports (padding:max(0px)){
+    body{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right);}
+  }
 </style>
 </head>
 <body data-page-node-id="ftzH5FMd4LYA5g8G2S1pRV">
